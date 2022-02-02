@@ -20,9 +20,7 @@ public class UserService {
 		return user;
 	}
 	
-	
 	public Optional<User> findById(Integer id) {
-		
 		Optional<User> user = userRepository.findById(id);
 		return user;
 	}

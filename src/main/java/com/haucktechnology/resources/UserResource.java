@@ -32,12 +32,10 @@ public class UserResource {
 	public ResponseEntity<Optional<User>> findById(@PathVariable Integer id) {
 
 		Optional<User> user = userService.findById(id);
-
-		if (user != null) {
+		try {
 			return ResponseEntity.ok().body(user);
-		}
-
-		else {
+			
+		} catch (RuntimeException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
