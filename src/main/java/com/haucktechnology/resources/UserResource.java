@@ -38,12 +38,15 @@ public class UserResource {
 	public ResponseEntity<Optional<User>> findById(@PathVariable Integer id) {
 
 		Optional<User> user = userService.findById(id);
-		try {
+		
+		if(user == null) {
 			return ResponseEntity.ok().body(user);
-
-		} catch (RuntimeException e) {
+		}
+		
+		else {
 			return ResponseEntity.notFound().build();
 		}
+		
 	}
 
 	@PostMapping
@@ -52,17 +55,17 @@ public class UserResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getId()).toUri();
 		return ResponseEntity.created(uri).body(u);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
 		userService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User obj) {
 		obj = userService.update(id, obj);
-		
+
 		return ResponseEntity.ok().body(obj);
 	}
 }
