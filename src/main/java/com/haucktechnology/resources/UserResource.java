@@ -38,15 +38,11 @@ public class UserResource {
 	public ResponseEntity<Optional<User>> findById(@PathVariable Integer id) {
 
 		Optional<User> user = userService.findById(id);
-		
-		if(user == null) {
+		if (user == null) {
 			return ResponseEntity.ok().body(user);
-		}
-		
-		else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
-		
 	}
 
 	@PostMapping
@@ -59,6 +55,9 @@ public class UserResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
 		userService.delete(id);
+		if(id == null) {
+			ResponseEntity.notFound().build();
+		}
 		return ResponseEntity.noContent().build();
 	}
 
